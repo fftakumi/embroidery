@@ -1,6 +1,6 @@
 import React from "react";
 import Color from "./color";
-import {Button, rgbToHex, Stack} from "@mui/material";
+import {Button, Stack} from "@mui/material";
 
 class ColorList extends React.Component {
     constructor(props) {
