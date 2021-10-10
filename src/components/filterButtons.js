@@ -1,5 +1,5 @@
 import React from "react";
-import {ButtonGroup, Button, easing} from "@mui/material";
+import {ButtonGroup, Button} from "@mui/material";
 import {flattenFilter, laplacianFilter, edgeY, edgeX} from "./filters";
 
 const FilterButtons = (props) => {
@@ -29,7 +29,6 @@ const FilterButtons = (props) => {
         }
         let clusters = [...Array(k)].map(() => Array().fill([]))
         for (let itr = 0; itr < max_itr; itr++) {
-            clusters = [...Array(k)].map(() => Array().fill([]))
             for (let i = 0; i < rgba.length; i++) {
                 let r = 3 * 255 ** 2 //最大値
                 let cluster_num = 0

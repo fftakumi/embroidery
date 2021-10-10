@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Card, Paper} from "@mui/material";
+import {Paper} from "@mui/material";
 import {ColorLens} from "@material-ui/icons";
 
 const Color = (props) => {

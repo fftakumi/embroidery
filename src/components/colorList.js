@@ -1,6 +1,6 @@
 import React from "react";
 import Color from "./color";
-import {Box, Button, rgbToHex, Stack} from "@mui/material";
+import {Button, rgbToHex, Stack} from "@mui/material";
 
 class ColorList extends React.Component {
     constructor(props) {
@@ -11,7 +11,7 @@ class ColorList extends React.Component {
 
     componentToHex = (c) => {
         const hex = c.toString(16);
-        return hex.length == 1 ? "0" + hex : hex;
+        return hex.length === 1 ? "0" + hex : hex;
     }
 
     rgbToHex = (r, g, b) => {
