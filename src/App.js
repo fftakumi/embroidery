@@ -17,7 +17,7 @@ const App = (props) => {
         <ThemeProvider theme={themeOptions}>
             <Header/>
             <Grid container spacing={2} direction='row' justifyContent='center' sx={{pt: '20px'}}>
-                <Grid item sx={2}>
+                <Grid item sx={1}>
                     <ColorList previewRef={previewRef}/>
                 </Grid>
                 <Grid item sx={6}>
