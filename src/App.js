@@ -3,7 +3,7 @@ import Preview from "./components/preview";
 import FilterButtons from "./components/filterButtons";
 import ColorList from "./components/colorList";
 import {ThemeProvider, Box, Grid, ButtonGroup, Button, IconButton} from "@mui/material";
-import {AddPhotoAlternate} from "@material-ui/icons";
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import themeOptions from "./components/muiTheme";
 import React, {useRef} from "react";
 import {Cropper} from "react-cropper";
@@ -52,7 +52,7 @@ const App = (props) => {
                             input.click()
                         }}
                         >
-                            <AddPhotoAlternate/>
+                            <AddPhotoAlternateIcon/>
                         </IconButton>
 
                     </ButtonGroup>
