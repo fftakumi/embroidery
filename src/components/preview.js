@@ -21,6 +21,18 @@ class Preview extends React.Component {
         return this.canvasRef.current.getContext('2d').createImageData(this.canvasRef.current.width, this.canvasRef.current.height)
     }
 
+    getContext = () => {
+        return this.canvasRef.current.getContext('2d')
+    }
+
+    getCanvas = () => {
+        return this.canvasRef.current
+    }
+
+    clear = () => {
+        this.canvasRef.current.getContext('2d').clearRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height)
+    }
+
     render() {
         return (
             <canvas ref={this.canvasRef} style={{maxWidth: 700, maxHeight:700}}/>
