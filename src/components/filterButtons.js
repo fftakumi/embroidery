@@ -178,11 +178,47 @@ const FilterButtons = (props) => {
         return imageData;
     };
 
+    const pixelate2 = (width, height) => {
+        const srcImageData = props.previewRef.current.getImageData()
+        const src = srcImageData.data
+        const dst = new ImageData(width, height).data
+        const filter_width = srcImageData.width / width
+        const filter_height = srcImageData.height / height
+
+        for (let x = 0; x < width; x++) for (let y = 0; y < height; y++) {
+            const refIdx = {
+                upperLeft: {x: x * filter_width, y: y * filter_height},
+                upperRight: {x: (x + 1) * filter_width, y: y * filter_height},
+                lowerLeft: {x: x * filter_width, y: (y + 1) * filter_height},
+                lowerRight: {x: (x + 1) * filter_width, y: (y + 1) * filter_height}
+            }
+            const sumRGB = {r:0,g:0,b:0}
+            
+        }
+    }
+
     const mosaic = () => {
         const imageData = pixelate(7,7)
         console.log(imageData)
         props.previewRef.current.setImageData(imageData)
     }
+
+    const test = () => {
+        const canvas = document.createElement('canvas')
+        const dst = canvas.getContext('2d')
+        const src = props.previewRef.current.getImageData()
+        canvas.width = src.width
+        canvas.height = src.height
+        dst.putImageData(src, 0,0)
+        const sw = src.width
+        const sh = src.height
+        const dw = 500
+        const dh = 500
+        props.previewRef.current.clear()
+        props.previewRef.current.setSize(dw, dh)
+        props.previewRef.current.getContext().drawImage(canvas, 0, 0, sw, sh, 0, 0, dw, dh)
+    }
+
 
     return (
         <ButtonGroup>
@@ -190,6 +226,7 @@ const FilterButtons = (props) => {
             <Button onClick={kernel} variant='contained'>ぼかし</Button>
             <Button onClick={edge} variant='contained'>輪郭</Button>
             <Button onClick={mosaic} variant='contained'>モザイク</Button>
+            <Button onClick={test} variant='contained'>test</Button>
         </ButtonGroup>
     )
 }

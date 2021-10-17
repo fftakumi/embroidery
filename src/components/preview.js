@@ -29,6 +29,11 @@ class Preview extends React.Component {
         return this.canvasRef.current
     }
 
+    setSize = (width, height) => {
+        this.canvasRef.current.width = width
+        this.canvasRef.current.height = height
+    }
+
     clear = () => {
         this.canvasRef.current.getContext('2d').clearRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height)
     }
