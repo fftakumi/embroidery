@@ -114,119 +114,26 @@ const FilterButtons = (props) => {
         props.previewRef.current.setImageData(image)
     }
 
-    const scale = () => {
-        const image = props.previewRef.current.getImageData()
-        props.previewRef.current.getContext().drawImage(props.previewRef.current.getCanvas(), 0, 0, image.width, image.height, 0, 0, 500, 500)
-        props.previewRef.current.getContext().drawImage(props.previewRef.current.getCanvas(), 0, 0, 500, 500, 0, 0, image.width, image.height)
-        console.log(props.previewRef.current.createImageData())
-    }
 
     const pixelate = (width, height) => {
-        const lowImage = []
-        const srcImageData = props.previewRef.current.getImageData()
-        const mosaicWidth = width
-        const mosaicHeight = height
-        var srcData = srcImageData.data,
-            imgWidth = srcImageData.width,
-            imgHeight = srcImageData.height,
-            imageData = props.previewRef.current.createImageData(),
-            data = imageData.data,
-            x, w, y, h, r, g, b, pixelIndex, i, j, pixelCount;
-
-        // モザイクサイズが m×n の場合、m×n毎に処理する
-        for(x = 0; x < imgWidth; x += mosaicWidth) {
-            if(mosaicWidth <= imgWidth - x) { w = mosaicWidth; }
-            else                            { w = imgWidth - x; }
-
-            for(y = 0; y < imgHeight; y += mosaicHeight) {
-                if(mosaicHeight <= imgHeight - y) { h = mosaicHeight; }
-                else                              { h = imgHeight - y; }
-
-                // モザイクの色を計算する
-                r = g = b = 0;
-                for(i = 0; i < w; i += 1) {
-                    for(j = 0; j < h; j += 1) {
-                        pixelIndex = ((y + j) * imgWidth + (x + i)) * 4; // ピクセルのインデックスを取得
-                        r += srcData[pixelIndex];
-                        g += srcData[pixelIndex + 1];
-                        b += srcData[pixelIndex + 2];
-                    }
-                }
-
-                // 平均を取る
-                pixelCount = w * h; // モザイクのピクセル数
-                r = Math.round(r / pixelCount);
-                g = Math.round(g / pixelCount);
-                b = Math.round(b / pixelCount);
-
-                lowImage.push({r:r,g:g,b:b})
-
-                // モザイクをかける
-                for(i = 0; i < w ;i += 1) {
-                    for(j = 0; j < h; j += 1) {
-                        pixelIndex = ((y + j) * imgWidth + (x + i)) * 4; // ピクセルのインデックスを取得
-                        data[pixelIndex] = r;
-                        data[pixelIndex + 1] = g;
-                        data[pixelIndex + 2] = b;
-                        data[pixelIndex + 3] = srcData[pixelIndex + 3]; // アルファ値はそのままコピー
-                    }
-                }
-            }
-        }
-
-
-        return imageData;
-    };
-
-    const pixelate2 = (width, height) => {
-        const srcImageData = props.previewRef.current.getImageData()
-        const src = srcImageData.data
-        const dst = new ImageData(width, height).data
-        const filter_width = srcImageData.width / width
-        const filter_height = srcImageData.height / height
-
-        for (let x = 0; x < width; x++) for (let y = 0; y < height; y++) {
-            const refIdx = {
-                upperLeft: {x: x * filter_width, y: y * filter_height},
-                upperRight: {x: (x + 1) * filter_width, y: y * filter_height},
-                lowerLeft: {x: x * filter_width, y: (y + 1) * filter_height},
-                lowerRight: {x: (x + 1) * filter_width, y: (y + 1) * filter_height}
-            }
-            const sumRGB = {r:0,g:0,b:0}
-            
-        }
-    }
-
-    const mosaic = () => {
-        const imageData = pixelate(7,7)
-        console.log(imageData)
-        props.previewRef.current.setImageData(imageData)
-    }
-
-    const test = () => {
         const canvas = document.createElement('canvas')
-        const dst = canvas.getContext('2d')
-        const src = props.previewRef.current.getImageData()
-        canvas.width = src.width
-        canvas.height = src.height
-        dst.putImageData(src, 0,0)
-        const sw = src.width
-        const sh = src.height
-        const dw = 500
-        const dh = 500
-        props.previewRef.current.clear()
-        props.previewRef.current.setSize(dw, dh)
-        props.previewRef.current.getContext().drawImage(canvas, 0, 0, sw, sh, 0, 0, dw, dh)
+        canvas.width = width
+        canvas.height = height
+        const src = props.previewRef.current.getCanvas()
+        canvas.getContext('2d').drawImage(src, 0, 0, width, height)
+        props.previewRef.current.setImageData(canvas.getContext('2d').getImageData(0, 0, width, height))
     }
 
+    const changePixel = () => {
+        pixelate(300, 300)
+    }
 
     return (
         <ButtonGroup>
             <Button onClick={clickDecreaseColor} variant='contained'>減色</Button>
             <Button onClick={kernel} variant='contained'>ぼかし</Button>
             <Button onClick={edge} variant='contained'>輪郭</Button>
-            <Button onClick={mosaic} variant='contained'>モザイク</Button>
-            <Button onClick={test} variant='contained'>test</Button>
+            <Button onClick={changePixel} variant='contained'>ピクセル変換</Button>
         </ButtonGroup>
     )
 }

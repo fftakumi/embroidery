@@ -16,21 +16,21 @@ const App = (props) => {
     return (
         <ThemeProvider theme={themeOptions}>
             <Header/>
-            <Grid container spacing={2} direction='row' justifyContent='center' sx={{pt: '20px'}}>
-                <Grid item sx={1}>
+            <Grid container spacing={1} direction='row' justifyContent='center' sx={{pt: '20px'}}>
+                <Grid item xs={1}>
                     <ColorList previewRef={previewRef}/>
                 </Grid>
-                <Grid item sx={6}>
-                    <Box component={'div'} sx={{width: '100%'}}>
+                <Grid item xs={6}>
+                    <Box component={'div'} sx={{width:'100%'}}>
                         <Box component={'div'}>
                             <FilterButtons previewRef={previewRef}/>
                         </Box>
-                        <Box component={'div'}>
+                        <Box component={'div'} sx={{textAlign: "center"}}>
                             <Preview ref={previewRef}/>
                         </Box>
                     </Box>
                 </Grid>
-                <Grid item sx={3}>
+                <Grid item xs={2}>
                     <ButtonGroup
                         variant="contained"
                         aria-label="outlined primary button group"
