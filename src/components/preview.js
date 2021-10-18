@@ -16,13 +16,15 @@ class Preview extends React.Component {
         this.canvasRef.current.height = sh
         const ctx = this.canvasRef.current.getContext('2d')
         const aspectRatio = sw/sh
-        if (aspectRatio > 1) {
+        /*if (aspectRatio > 1) {
             this.canvasRef.current.style.width = this.maxWidth + "px"
             this.canvasRef.current.style.height = ""
         } else {
             this.canvasRef.current.style.width = ""
             this.canvasRef.current.style.height = this.maxHeight + "px"
-        }
+        }*/
+
+        this.canvasRef.current.style.width = (aspectRatio > 1)? '100%': aspectRatio * 100 + '%'
         ctx.putImageData(imageData, 0, 0)
 
     }

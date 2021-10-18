@@ -20,12 +20,12 @@ const App = (props) => {
                 <Grid item xs={1}>
                     <ColorList previewRef={previewRef}/>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={5}>
                     <Box component={'div'} sx={{width:'100%'}}>
                         <Box component={'div'}>
                             <FilterButtons previewRef={previewRef}/>
                         </Box>
-                        <Box component={'div'} sx={{textAlign: "center"}}>
+                        <Box component={'div'} sx={{textAlign: "center", backgroundColor: "#FFFFFF", padding:'10px'}}>
                             <Preview ref={previewRef}/>
                         </Box>
                     </Box>
