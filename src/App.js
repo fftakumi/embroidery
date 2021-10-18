@@ -8,7 +8,7 @@ import themeOptions from "./components/muiTheme";
 import React, {useRef} from "react";
 import {Cropper} from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import logo from "./suwawa.png"
+import logo from "./test.jpg"
 
 const App = (props) => {
     const cropperRef = useRef(null)
