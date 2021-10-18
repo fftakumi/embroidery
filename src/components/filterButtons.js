@@ -1,6 +1,8 @@
 import React from "react";
-import {ButtonGroup, Button} from "@mui/material";
+import {ButtonGroup, Button, TextField} from "@mui/material";
 import {flattenFilter, laplacianFilter, edgeY, edgeX} from "./filters";
+import ChangePixelButton from "./changePixelButton";
+import DecreaseColorButton from "./decreaseColorButton";
 
 const FilterButtons = (props) => {
     const kMeans = async (k) => {
@@ -114,11 +116,21 @@ const FilterButtons = (props) => {
         props.previewRef.current.setImageData(image)
     }
 
+
+    const pixelate = (width, height) => {
+        const canvas = document.createElement('canvas')
+        canvas.width = width
+        canvas.height = height
+        const src = props.previewRef.current.getCanvas()
+        canvas.getContext('2d').drawImage(src, 0, 0, width, height)
+        props.previewRef.current.setImageData(canvas.getContext('2d').getImageData(0, 0, width, height))
+    }
+
     return (
         <ButtonGroup>
-            <Button onClick={clickDecreaseColor} variant='contained'>減色</Button>
-            <Button onClick={kernel} variant='contained'>ぼかし</Button>
+            <DecreaseColorButton func={kMeans}/>
             <Button onClick={edge} variant='contained'>輪郭</Button>
+            <ChangePixelButton func={pixelate}/>
         </ButtonGroup>
     )
 }
