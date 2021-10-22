@@ -6,7 +6,7 @@ import DecreaseColorButton from "./decreaseColorButton";
 
 const FilterButtons = (props) => {
     const kMeans = async (k) => {
-        const max_itr = 100
+        const max_itr = 50
         const rgba = []
         const src = props.previewRef.current.getImageData()
         const dst = props.previewRef.current.createImageData()
@@ -36,7 +36,7 @@ const FilterButtons = (props) => {
         for (let itr = 0; itr < max_itr; itr++) {
             let preG = g.concat(g)
             for (let i = 0; i < rgba.length; i++) {
-                let r = 3 * 255 ** 2 //最大値
+                let r = 3 * 255 ** 2 //最大誤差
                 let cluster_num = 0
                 //重心との距離によりクラスター分け
                 for (let j = 0; j < k; j++) {
@@ -61,10 +61,6 @@ const FilterButtons = (props) => {
                 g[cluster_num].g = Math.round(g_tmp.g)
                 g[cluster_num].b = Math.round(g_tmp.b)
             })
-            if (JSON.stringify(preG) === JSON.stringify(g)) {
-                console.log(itr)
-                break
-            }
         }
         clusters.map((cluster, i) => {
             cluster.map(_rgba => {
