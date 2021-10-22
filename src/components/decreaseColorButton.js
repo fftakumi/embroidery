@@ -8,8 +8,9 @@ const DecreaseColorButton = (props) => {
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-    const handleApply = () => {
-        props.func(colorNum)
+    const handleApply = async () => {
+        props.func(colorNum).then(console.log('end'))
+        console.log("test")
         handleClose()
     }
     const handleClose = () => {
@@ -33,7 +34,7 @@ const DecreaseColorButton = (props) => {
                     <p>
                         <TextField size="small"
                                    variant="filled"
-                                   label={'Number ob Color'}
+                                   label={'Number of Colors'}
                                    defaultValue={colorNum}
                                    onChange={(e)=>{
                                        setColorNum(Number(e.target.value))

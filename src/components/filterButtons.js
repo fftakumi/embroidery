@@ -28,9 +28,13 @@ const FilterButtons = (props) => {
         for (let i = 0; i < k; i++) {
             const random = Math.floor(Math.random() * rgba.length)
             g[i] = rgba[random]  //初期の重心
+            g[i].r += Math.random() * 6 - 3 //被り無いように少し乱数加える
+            g[i].g += Math.random() * 6 - 3 // -3~3
+            g[i].b += Math.random() * 6 - 3
         }
         let clusters = [...Array(k)].map(() => Array().fill([]))
         for (let itr = 0; itr < max_itr; itr++) {
+            let preG = g.concat(g)
             for (let i = 0; i < rgba.length; i++) {
                 let r = 3 * 255 ** 2 //最大値
                 let cluster_num = 0
@@ -57,6 +61,10 @@ const FilterButtons = (props) => {
                 g[cluster_num].g = Math.round(g_tmp.g)
                 g[cluster_num].b = Math.round(g_tmp.b)
             })
+            if (JSON.stringify(preG) === JSON.stringify(g)) {
+                console.log(itr)
+                break
+            }
         }
         clusters.map((cluster, i) => {
             cluster.map(_rgba => {
@@ -67,10 +75,6 @@ const FilterButtons = (props) => {
             })
         })
         props.previewRef.current.setImageData(dst)
-    }
-
-    const clickDecreaseColor = async () => {
-        await kMeans(5)
     }
 
     const applyFilter = async (srcImage, filter) => {
