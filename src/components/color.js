@@ -1,6 +1,7 @@
 import React from "react";
 import {Paper} from "@mui/material";
 import {ColorLens} from "@mui/icons-material";
+import {cosmos} from "./stringColors";
 
 const Color = (props) => {
     return (
