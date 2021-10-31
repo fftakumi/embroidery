@@ -19,7 +19,7 @@ const DecreaseColorButton = (props) => {
     return(
         <div>
             <Button variant="contained" onClick={handleClick}>
-                減色
+                色を減らす
             </Button>
             <Popover
                 open={open}
