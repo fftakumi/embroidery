@@ -1,6 +1,7 @@
 import React from "react";
 import Color from "./color";
 import {Button, Stack} from "@mui/material";
+import {cosmos} from "./stringColors";
 
 class ColorList extends React.Component {
     constructor(props) {
@@ -26,6 +27,7 @@ class ColorList extends React.Component {
         if (colors.size > 100) {
             alert('色が多すぎて表示出来ません')
         } else {
+
             this.setState({
                 colors: [...colors]
             })

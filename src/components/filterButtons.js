@@ -3,10 +3,11 @@ import {ButtonGroup, Button, TextField} from "@mui/material";
 import {flattenFilter, laplacianFilter, edgeY, edgeX} from "./filters";
 import ChangePixelButton from "./changePixelButton";
 import DecreaseColorButton from "./decreaseColorButton";
+import CreateDiagramButton from "./createDiagramButton";
 
 const FilterButtons = (props) => {
     const kMeans = async (k) => {
-        const max_itr = 100
+        const max_itr = 50
         const rgba = []
         const src = props.previewRef.current.getImageData()
         const dst = props.previewRef.current.createImageData()
@@ -28,11 +29,15 @@ const FilterButtons = (props) => {
         for (let i = 0; i < k; i++) {
             const random = Math.floor(Math.random() * rgba.length)
             g[i] = rgba[random]  //初期の重心
+            g[i].r += Math.random() * 6 - 3 //被り無いように少し乱数加える
+            g[i].g += Math.random() * 6 - 3 // -3~3
+            g[i].b += Math.random() * 6 - 3
         }
         let clusters = [...Array(k)].map(() => Array().fill([]))
         for (let itr = 0; itr < max_itr; itr++) {
+            let preG = g.concat(g)
             for (let i = 0; i < rgba.length; i++) {
-                let r = 3 * 255 ** 2 //最大値
+                let r = 3 * 255 ** 2 //最大誤差
                 let cluster_num = 0
                 //重心との距離によりクラスター分け
                 for (let j = 0; j < k; j++) {
@@ -69,10 +74,6 @@ const FilterButtons = (props) => {
         props.previewRef.current.setImageData(dst)
     }
 
-    const clickDecreaseColor = async () => {
-        await kMeans(5)
-    }
-
     const applyFilter = async (srcImage, filter) => {
         const src = srcImage
         const filterX = filter[0].length
@@ -92,7 +93,7 @@ const FilterButtons = (props) => {
             image.data[redIdx] = ~~image.data[redIdx]
             image.data[redIdx + 1] = ~~image.data[redIdx + 1]
             image.data[redIdx + 2] = ~~image.data[redIdx + 2]
-            image.data[redIdx + 3] = 255
+            image.data[redIdx + 3] = src.data[redIdx + 3]
         }
         return image
     }
@@ -103,17 +104,21 @@ const FilterButtons = (props) => {
     }
 
     const edge = async () => {
-        const flatten = await applyFilter(props.previewRef.current.getImageData(), flattenFilter(5))
+        const src = props.previewRef.current.getImageData()
+        const flatten = await applyFilter(src, flattenFilter(5))
         const edgedX = await applyFilter(flatten, edgeX)
         const edgedY = await applyFilter(flatten, edgeY)
         const image = new ImageData(edgedX.width, edgedX.height)
+        const emphasisBorder = 20
         for (let i = 0; i < edgedX.data.length; i += 4) {
+            const r = (edgedX.data[i] + edgedY.data[i]) + (edgedX.data[i + 1] + edgedY.data[i + 1]) + (edgedX.data[i + 2] + edgedY.data[i + 2]) / 2
             image.data[i] = (edgedX.data[i] + edgedY.data[i]) / 2
             image.data[i + 1] = (edgedX.data[i + 1] + edgedY.data[i + 1]) / 2
             image.data[i + 2] = (edgedX.data[i + 2] + edgedY.data[i + 2]) / 2
-            image.data[i + 3] = 255
+            image.data[i + 3] = r < 20? 0 : 255
+            src.data[i + 3] = r < emphasisBorder? 150:255
         }
-        props.previewRef.current.setImageData(image)
+        props.previewRef.current.setImageData(src)
     }
 
 
@@ -129,8 +134,9 @@ const FilterButtons = (props) => {
     return (
         <ButtonGroup>
             <DecreaseColorButton func={kMeans}/>
-            <Button onClick={edge} variant='contained'>輪郭</Button>
+            <Button onClick={edge} variant='contained'>輪郭を強調する</Button>
             <ChangePixelButton func={pixelate}/>
+            <CreateDiagramButton getSrcImg={() => {return props.previewRef.current?.getImageData()}}/>
         </ButtonGroup>
     )
 }

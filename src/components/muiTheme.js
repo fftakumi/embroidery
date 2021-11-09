@@ -10,6 +10,11 @@ const themeOptions = createTheme({
             main: '#e6beaa',
         },
     },
+    typography: {
+        fontFamily: [
+            'Kosugi Maru',
+        ].join(','),
+    },
 });
 
 export default themeOptions
