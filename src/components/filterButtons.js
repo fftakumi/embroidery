@@ -133,9 +133,9 @@ const FilterButtons = (props) => {
 
     return (
         <ButtonGroup>
+            <ChangePixelButton func={pixelate}/>
             <DecreaseColorButton func={kMeans}/>
             <Button onClick={edge} variant='contained'>輪郭を強調する</Button>
-            <ChangePixelButton func={pixelate}/>
             <CreateDiagramButton getSrcImg={() => {return props.previewRef.current?.getImageData()}}/>
         </ButtonGroup>
     )
