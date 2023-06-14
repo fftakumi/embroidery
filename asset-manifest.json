@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/konnitiha3/embroidery/static/css/main.136a95f5.css",
+    "main.js": "/konnitiha3/embroidery/static/js/main.f147eeac.js",
+    "static/js/496.22a3de34.chunk.js": "/konnitiha3/embroidery/static/js/496.22a3de34.chunk.js",
+    "static/media/test.jpg": "/konnitiha3/embroidery/static/media/test.e8e3ee23092dab3837a8.jpg",
+    "index.html": "/konnitiha3/embroidery/index.html",
+    "main.136a95f5.css.map": "/konnitiha3/embroidery/static/css/main.136a95f5.css.map",
+    "main.f147eeac.js.map": "/konnitiha3/embroidery/static/js/main.f147eeac.js.map",
+    "496.22a3de34.chunk.js.map": "/konnitiha3/embroidery/static/js/496.22a3de34.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.136a95f5.css",
+    "static/js/main.f147eeac.js"
+  ]
+}
